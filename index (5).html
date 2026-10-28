@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callan BEC Go Green — Official 11.11 Web Prototype</title>
+    <style>
+        :root {
+            --coconut-brown: #6D4C41;
+            --eco-green: #2E7D32;
+            --light-tan: #F5F2EB;
+            --soft-white: #FAF9F6;
+            --dark-charcoal: #2C2C2C;
+            --promo-orange: #E65100;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--soft-white);
+            color: var(--dark-charcoal);
+            line-height: 1.6;
+        }
+
+        /* 11.11 Promotion Top Banner */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--promo-orange), #BF360C);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .promo-banner a {
+            color: #FFF59D;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        header {
+            background-color: var(--soft-white);
+            border-bottom: 2px solid var(--light-tan);
+            position: sticky;
+            top: 45px;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed var(--eco-green);
+            background-color: var(--light-tan);
+            display: flex;
+            align-items: center;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--coconut-brown);
+            border-radius: 50%;
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            color: var(--eco-green);
+            line-height: 1.1;
+        }
+
+        .logo-text span {
+            font-size: 0.85rem;
+            color: var(--coconut-brown);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul a {
+            text-decoration: none;
+            color: var(--dark-charcoal);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav ul a:hover {
+            color: var(--eco-green);
+        }
+
+        /* Hero Style Background */
+        .hero-section {
+            background-color: var(--light-tan);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--eco-green);
+            position: relative;
+        }
+
+        .hero-bg-frame {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.08;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h2 {
+            font-size: 2.6rem;
+            color: var(--coconut-brown);
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--eco-green);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .section-padding {
+            padding: 70px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--coconut-brown);
+            margin-bottom: 35px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--eco-green);
+            margin: 10px auto 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .about-box {
+            background-color: white;
+            padding: 35px;
+            border-radius: 8px;
+            border-left: 5px solid var(--eco-green);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .about-box h3 {
+            color: var(--eco-green);
+            margin-bottom: 12px;
+        }
+
+        /* Products Presentation */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid var(--light-tan);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 200px;
+            background-color: #EFEBE9;
+            border-bottom: 1px solid var(--light-tan);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editable-label {
+            font-size: 0.8rem;
+            color: #795548;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border: 2px dashed #A1887F;
+            border-radius: 4px;
+            background-color: rgba(255,255,255,0.7);
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            color: var(--coconut-brown);
+            margin-bottom: 8px;
+        }
+
+        .product-variants {
+            background-color: var(--soft-white);
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .variant-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed #E0E0E0;
+        }
+
+        .variant-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Calculator Widget */
+        .calc-wrapper {
+            background-color: #FFF8E1;
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 700px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .calc-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .calc-group label {
+            font-weight: bold;
+            color: var(--coconut-brown);
+        }
+
+        .calc-group select, .calc-group input {
+            padding: 10px;
+            border: 1px solid #CCC;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .calc-total {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 6px solid var(--promo-orange);
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark-charcoal);
+        }
+
+        .calc-total span {
+            color: var(--promo-orange);
+            font-size: 1.6rem;
+        }
+
+        /* Instructions Workflow */
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .guide-step {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .step-num {
+            position: absolute;
+            top: -15px; left: 20px;
+            background-color: var(--coconut-brown);
+            color: white;
+            width: 35px; height: 35px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold;
+        }
+
+        /* FAQ Styling */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: white;
+            border: 1px solid var(--light-tan);
+            margin-bottom: 10px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--coconut-brown);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-trigger:hover {
+            background-color: var(--light-tan);
+        }
+
+        .faq-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .contact-area {
+            background-color: var(--light-tan);
+            text-align: center;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .fb-link-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1877F2;
+            color: white;
+            padding: 14px 35px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.2);
+        }
+
+        footer {
+            background-color: var(--coconut-brown);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid, .calc-grid { grid-template-columns: 1fr; }
+            .hero-content h2 { font-size: 2rem; }
+            header { top: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 11.11 Flash Promotion Ribbon Header -->
+    <div class="promo-banner">
+        🍂 11.11 BIG GREEN CAMPAIGN: Save with the "Ultimate Starter Bundle"! 
+        <a href="#estimator">Run Cost Estimator ↓</a>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-area">
+                <!-- EDITABLE IMAGE FRAME (LOGO PLACEHOLDER) -->
+                <div class="logo-placeholder">
+                    <!-- <img src="logo.png" style="width:100%; height:100%; border-radius:50%; object-fit:cover;"> -->
+                    LOGO FRAME
+                </div>
+                <div class="logo-text">
+                    <h1>CALLAN BEC</h1>
+                    <span>GO GREEN</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#catalog">Products</a></li>
+                    <li><a href="#estimator">Calculator</a></li>
+                    <li><a href="#contact">Order</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div id="home" class="hero-section">
+        <!-- EDITABLE IMAGE FRAME (HERO BACKGROUND LOGO EMBED) -->
+        <div class="hero-bg-frame">
+            <!-- <img src="logo-bg.png" style="width:300px; height:300px; object-fit:contain;"> -->
+            [BACKGROUND BRAND MARK LOGO WATERMARK]
+        </div>
+        <div class="hero-content">
+            <h2>From Agricultural Waste to Community Wealth</h2>
+            <p>Welcome to Callan Basic Ecclesial Community (BEC) Livelihood Association. We upcycle raw, discarded local coconut husks and shells into high-performing, certified organic garden setups.</p>
+            <a href="#catalog" class="btn">Explore Product Line</a>
+        </div>
+    </div>
+
+    <div id="about" class="section-padding">
+        <div class="about-grid">
+            <div class="about-box">
+                <h3>Our Vision</h3>
+                <p>To establish a model community-led social enterprise in Sebaste, Antique that elevates provincial Karay-a craftsmanship while championing environmental restoration and zero-waste farming systems.</p>
+            </div>
+            <div class="about-box">
+                <h3>Our Mission</h3>
+                <p>To empower small-scale farmers, seniors, and weavers across Barangay Callan by producing top-tier, bio-safe, chemical-free structural plant supports and growth mediums supported directly by the DTI and PCA.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process and Artisan Sourcing Gallery Framework -->
+    <div class="section-padding" style="background-color: #FFF;">
+        <h2 class="section-title">Artisan Workshop & Sourcing Records</h2>
+        <div class="guide-grid">
+            <div class="product-card">
+                <!-- EDITABLE ARTISAN IMAGE 1 -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="source-husks.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo: Raw Husk Sourcing]</div>
+                </div>
+                <div style="padding: 15px;">
+                    <h4 style="color:var(--coconut-brown);">1. Sourcing Waste</h4>
+                    <p style="font-size:0.88rem; color:#666;">Buying unpolished components straight from agricultural growers, preventing field-burning hazards.</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <!-- EDITABLE ARTISAN IMAGE 2 -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="weaving.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo: Hand-Weaving Center]</div>
+                </div>
+                <div style="padding: 15px;">
+                    <h4 style="color:var(--coconut-brown);">2. Micro-Enterprise Handcrafting</h4>
+                    <p style="font-size:0.88rem; color:#666;">Weaving coco doormats and framing coir twine logs manually in the regional neighborhood hub.</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <!-- EDITABLE ARTISAN IMAGE 3 -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="exhibit-booth.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo: DTI Exhibition Booth]</div>
+                </div>
+                <div style="padding: 15px;">
+                    <h4 style="color:var(--eco-green);">3. Verified National Reach</h4>
+                    <p style="font-size:0.88rem; color:#666;">Showcasing certified award-winning lines across regional trade fairs under Booths #140 & #281.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="catalog" class="section-padding">
+        <h2 class="section-title">Verified Organic Product Catalog</h2>
+        <div class="catalog-grid">
+
+            <!-- Coco Pole -->
+            <div class="product-card">
+                <!-- EDITABLE IMAGE FRAME -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="coco-pole.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo Placeholder: Coco Poles]</div>
+                </div>
+                <div class="product-info">
+                    <h3>Coco Poles</h3>
+                    <p>Sturdy, natural coco-coir structural stakes built for structural vine anchoring, climbing pothos, and monsteras.</p>
+                    <div class="product-variants">
+                        <div class="variant-row"><span>20" Length</span><strong>₱95.00</strong></div>
+                        <div class="variant-row"><span>24" Length</span><strong>₱110.00</strong></div>
+                        <div class="variant-row"><span>28" Length</span><strong>₱130.00</strong></div>
+                        <div class="variant-row"><span>34" Length</span><strong>₱150.00</strong></div>
+                        <div class="variant-row"><span>40" Length</span><strong>₱180.00</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coco Peat -->
+            <div class="product-card">
+                <!-- EDITABLE IMAGE FRAME -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="coco-peat.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo Placeholder: Coco Peat Bag]</div>
+                </div>
+                <div class="product-info">
+                    <h3>Coco Peat Bags</h3>
+                    <p>High moisture retention matrix media keeping potting soil naturally aerated and perfectly moist for seedlings.</p>
+                    <div class="product-variants">
+                        <div class="variant-row"><span>1 Kilogram Bag</span><strong>₱25.00</strong></div>
+                        <div class="variant-row"><span>2 Kilograms Bag</span><strong>₱50.00</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coco Doormat -->
+            <div class="product-card">
+                <!-- EDITABLE IMAGE FRAME -->
+                <div class="image-container">
+                    <div class="editable-label"><!-- <img src="doormat.jpg" style="width:100%; height:100%; object-fit:cover;"> -->[Photo Placeholder: Doormats]</div>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Coco Doormat</h3>
+                    <p>Heavy-duty, long-lasting woven coir fiber block scraper ideal for outdoor porch setups and garden entrances.</p>
+                    <div class="product-variants">
+                        <div class="variant-row"><span>24" x 16" Standard</span><strong>₱200.00</strong></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Dynamic Cost Estimator and Smart Logistics Module -->
+    <div id="estimator" class="section-padding" style="background-color: #FFF;">
+        <h2 class="section-title">Interactive Bulk & Order Calculator</h2>
+        <div class="calc-wrapper">
+            <div class="calc-grid">
+                <div class="calc-group">
+                    <label for="pole-select">Select Coco Pole Variant:</label>
+                    <select id="pole-select" onchange="calculateTotal()">
+                        <option value="0">None</option>
+                        <option value="95">20 inches — ₱95.00</option>
+                        <option value="110">24 inches — ₱110.00</option>
+                        <option value="130">28 inches — ₱130.00</option>
+                        <option value="150">34 inches — ₱150.00</option>
+                        <option value="180">40 inches — ₱180.00</option>
+                    </select>
+                </div>
+                <div class="calc-group">
+                    <label for="pole-qty">Poles Quantity:</label>
+                    <input type="number" id="pole-qty" min="0" value="0" oninput="calculateTotal()">
+                </div>
+                <div class="calc-group">
+                    <label for="peat-select">Select Cocopeat Size:</label>
+                    <select id="peat-select" onchange="calculateTotal()">
+                        <option value="0">None</option>
+                        <option value="25">1 Kilo Pack — ₱25.00</option>
+                        <option value="50">2 Kilos Pack — ₱50.00</option>
+                    </select>
+                </div>
+                <div class="calc-group">
+                    <label for="peat-qty">Peat Bags Quantity:</label>
+                    <input type="number" id="peat-qty" min="0" value="0" oninput="calculateTotal()">
+                </div>
+            </div>
+
+            <!-- Integrated Shipping dropdown selector -->
+            <div class="calc-group" style="margin-bottom: 25px;">
+                <label for="shipping-select">Select Delivery Mode / Hub Location:</label>
+                <select id="shipping-select" onchange="calculateTotal()">
+                    <option value="0">Local Pick-Up (Brgy. Callan Roadside Office) — FREE</option>
+                    <option value="45">Within Sebaste Municipal Areas — ₱45.00</option>
+                    <option value="120">Other Antique Municipalities (Culasi/Pandan/San Jose) — ₱120.00</option>
+                    <option value="250">Neighboring Panay Provinces (Iloilo / Aklan / Capiz) — ₱250.00</option>
+                </select>
+            </div>
+
+            <div class="calc-total">
+                Estimated Order Grand Total: ₱<span id="grand-total">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDITABLE PAYMENT SECTION & SECURE CHECKOUT OUTLINE -->
+    <div class="section-padding">
+        <h2 class="section-title">Payment Channels & Ordering Instructions</h2>
+        <div class="about-grid">
+            <div class="about-box" style="border-left-color: var(--promo-orange);">
+                <h3>Accepted Secure Portals</h3>
+                <p style="margin-bottom:10px;"><strong>📲 Mobile Option:</strong> GCash Wire Transfer</p>
+                <p style="font-size:0.9rem; color:#555; background:#F9F9F9; padding:10px; border-left:3px solid #4CAF50; margin-bottom:15px;">
+                    Account Name: [Insert Name]<br>
+                    Mobile Number: 09771598297
+                </p>
+                <p><strong>📦 Local Option:</strong> Cash on Pick-Up (COP) / Remittance Hubs (LBC)</p>
+            </div>
+            <div class="about-box">
+                <h3>3-Step Process Guide</h3>
+                <ul style="padding-left:15px; font-size:0.95rem;">
+                    <li style="margin-bottom:8px;"><strong>Step 1:</strong> Adjust quantities above and take a clear snapshot or screenshot of your calculated Grand Total matrix.</li>
+                    <li style="margin-bottom:8px;"><strong>Step 2:</strong> Tap the blue Facebook connection portal anchor block located below.</li>
+                    <li style="margin-bottom:8px;"><strong>Step 3:</strong> Send your screenshot along with your physical delivery address to finalize packaging drop-offs.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Accordion Module -->
+    <div class="section-padding" style="background-color:#FFF;">
+        <h2 class="section-title">Frequently Asked Questions (FAQ)</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)">Can we request customized dimensions for poles? <span>+</span></button>
+                <div class="faq-content"><p style="padding:15px 0;">Yes! Because our items are meticulously hand-woven directly inside Brgy. Callan, we easily handle customized sizes for large commercial plant farms and landscape layout accounts. Contact us via FB to arrange sizes.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)">How long do upcycled coconut poles last? <span>+</span></button>
+                <div class="faq-content"><p style="padding:15px 0;">Our organic coir supports naturally withstand direct water spray, constant weathering, and soil decomposition, making them significantly longer-lasting alternative supports than fragile synthetic plastics.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)">Are bulk discounts available for regional resorts? <span>+</span></button>
+                <div class="faq-content"><p style="padding:15px 0;">Yes. We offer B2B wholesale pricing tiers for regional Panay plant centers, hotels, and municipal landscape offices sourcing large batches of coir matting or cocopeat logs.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="section-padding" style="text-align:center;">
+        <div class="contact-area">
+            <h2>Secure Your 11.11 Order Bookings Directly</h2>
+            <p style="max-width: 600px; margin: 15px auto; color:#555;">Speak directly with our local coordinator <strong>Josephine G. Riomalos</strong> via standard mobile channels at <strong>09771598297 / 09450941554</strong> or connect directly to our Facebook account page box framework below.</p>
+            <a href="https://web.facebook.com/profile.php?id=61552247661114" target="_blank" class="fb-link-btn">
+                📩 Message Official Callan BEC Facebook Page
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Callan BEC Livelihood Association | Proudly Sebastehanon. Awarded "Most Sustainable MSME". All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function calculateTotal() {
+            var polePrice = parseFloat(document.getElementById('pole-select').value);
+            var poleQty = parseInt(document.getElementById('pole-qty').value) || 0;
+            var peatPrice = parseFloat(document.getElementById('peat-select').value);
+            var peatQty = parseInt(document.getElementById('peat-qty').value) || 0;
+            var logisticsFee = parseFloat(document.getElementById('shipping-select').value);
+
+            if (poleQty < 0) poleQty = 0;
+            if (peatQty < 0) peatQty = 0;
+
+            var itemsTotal = (polePrice * poleQty) + (peatPrice * peatQty);
+            var overallTotal = itemsTotal > 0 ? (itemsTotal + logisticsFee) : 0;
+
+            document.getElementById('grand-total').innerText = overallTotal.toFixed(2);
+        }
+
+        function toggleFaq(btn) {
+            var content = btn.nextElementSibling;
+            var indicator = btn.querySelector('span');
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                indicator.innerText = '+';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                indicator.innerText = '-';
+            }
+        }
+    </script>
+</body>
+</html>
